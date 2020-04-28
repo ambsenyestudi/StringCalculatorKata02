@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace StringCalculatorKata.Domain
 {
@@ -13,12 +15,28 @@ namespace StringCalculatorKata.Domain
             
             if(numberInput.Contains(","))
             {
-                var numberParts = numberInput.Split(",");
-
-                return int.Parse(numberParts[0]) + int.Parse(numberParts[1]);
+                var parts = ToAdditionParts(numberInput);
+                return AddParts(parts);
             }
 
             return int.Parse(numberInput);
+        }
+        private List<int> ToAdditionParts(string numberInput)
+        {
+            var parts = numberInput
+                .Split(",")
+                .Select(x => int.Parse(x))
+                .ToList();
+            return parts;
+        }
+        private int AddParts(IList<int> partCollection)
+        {
+            var total = 0;
+            foreach (var part in partCollection)
+            {
+                total += part;
+            }
+            return total;
         }
     }
 }

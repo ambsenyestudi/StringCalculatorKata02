@@ -31,11 +31,22 @@ namespace StringCalculatorKata.Test
             Assert.Equal(expected, result);
         }
         //Add("1,2")  3
-        [Fact]
-        public void return_number_when_input_is_1_coma_2()
+        [Theory]
+        [InlineData("1,2", 3)]
+        [InlineData("3,3", 6)]
+        [InlineData("2,8", 10)]
+        public void add_two_coma_separated_numbers(string input, int expected)
         {
-            var expected = 3;
-            var result = sut.Add("1,2");
+            var result = sut.Add(input);
+            Assert.Equal(expected, result);
+        }
+        //Add("1,2,3,4,5,6,7,8,9") 45
+        [Fact]
+        public void add_many_coma_separated_numbers()
+        {
+            string input = "1,2,3,4,5,6,7,8,9";
+            int expected = 45;
+            var result = sut.Add(input);
             Assert.Equal(expected, result);
         }
     }
