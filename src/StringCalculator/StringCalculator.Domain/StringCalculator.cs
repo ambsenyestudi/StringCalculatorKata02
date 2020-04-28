@@ -75,7 +75,12 @@ namespace StringCalculatorKata.Domain
             {
                 parts = BatchSplitBySeparator(parts, separator).ToList();
             }
-            return parts.Select(x => int.Parse(x)).ToList();
+            var numbers = parts.Select(x => int.Parse(x));
+            if(numbers.Any(x=>x<0))
+            {
+                throw new NegativeNumberExpection("Add can not operate negative numbers");
+            }
+            return numbers.ToList();
         }
         private IList<string> SplitBySeparator(string input, char separator) =>
             input.Split(separator);

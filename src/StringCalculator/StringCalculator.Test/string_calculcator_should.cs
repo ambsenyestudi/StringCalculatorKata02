@@ -60,5 +60,12 @@ namespace StringCalculatorKata.Test
             var result = sut.Add(input);
             Assert.Equal(expected, result);
         }
+        //Add("1,-2,-3") // error: negatives not allowed: -2 -3
+        [Fact]
+        public void error_when_negative_numbers()
+        {
+            string input = "1,-2,-3";
+            Assert.Throws<NegativeNumberExpection>(()=>sut.Add(input));
+        }
     }
 }
