@@ -21,11 +21,13 @@ namespace StringCalculatorKata.Test
             Assert.Equal(expected, result);
         }
         //Add("4") 4
-        [Fact]
-        public void return_number_when_input_is_4()
+        [Theory]
+        [InlineData("4",4)]
+        [InlineData("6", 6)]
+        [InlineData("100", 100)]
+        public void return_number_when_input_is_number(string input, int expected)
         {
-            var expected = 4;
-            var result = sut.Add("4");
+            var result = sut.Add(input);
             Assert.Equal(expected, result);
         }
         //Add("1,2")  3

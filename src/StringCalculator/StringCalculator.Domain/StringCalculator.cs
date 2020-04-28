@@ -15,7 +15,8 @@ namespace StringCalculatorKata.Domain
             {
                 return 3;
             }
-            return 4;
+
+            return int.Parse(numbers);
         }
     }
 }
