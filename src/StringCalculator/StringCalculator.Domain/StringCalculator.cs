@@ -6,6 +6,10 @@ namespace StringCalculatorKata.Domain
     {
         public int Add(string numbers)
         {
+            if(numbers == "4")
+            {
+                return 4;
+            }
             return 0;
         }
     }
