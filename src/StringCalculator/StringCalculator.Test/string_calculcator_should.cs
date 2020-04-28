@@ -22,12 +22,19 @@ namespace StringCalculatorKata.Test
         }
         //Add("4") 4
         [Fact]
-        public void return_number_when_input_is_number()
+        public void return_number_when_input_is_4()
         {
             var expected = 4;
             var result = sut.Add("4");
             Assert.Equal(expected, result);
         }
         //Add("1,2")  3
+        [Fact]
+        public void return_number_when_input_is_1_coma_2()
+        {
+            var expected = 3;
+            var result = sut.Add("1,2");
+            Assert.Equal(expected, result);
+        }
     }
 }
