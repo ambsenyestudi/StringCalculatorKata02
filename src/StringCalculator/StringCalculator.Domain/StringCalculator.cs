@@ -6,6 +6,12 @@ namespace StringCalculatorKata.Domain
 {
     public class StringCalculator
     {
+        private readonly string[] separatorList;
+
+        public StringCalculator()
+        {
+            separatorList = new string[] { ",", "\n" };
+        }
         public int Add(string numberInput)
         {
             if(string.IsNullOrEmpty(numberInput))
@@ -13,30 +19,44 @@ namespace StringCalculatorKata.Domain
                 return 0;
             }
             
-            if(numberInput.Contains(","))
+            if(ContainsSeparator(numberInput))
             {
                 var parts = ToAdditionParts(numberInput);
-                return AddParts(parts);
+                
+                return parts.Sum();
             }
 
             return int.Parse(numberInput);
         }
+
+        private bool ContainsSeparator(string numberInput)
+        {
+            var isFound = false;
+            int count = 0;
+            while (!isFound && count < separatorList.Length)
+            {
+                isFound = numberInput.Contains(separatorList[count]);
+                count++;
+            }
+            return isFound;
+        }
+
         private List<int> ToAdditionParts(string numberInput)
         {
-            var parts = numberInput
-                .Split(",")
-                .Select(x => int.Parse(x))
-                .ToList();
-            return parts;
-        }
-        private int AddParts(IList<int> partCollection)
-        {
-            var total = 0;
-            foreach (var part in partCollection)
+            var parts = new List<string> { numberInput };
+            foreach (var separator in separatorList)
             {
-                total += part;
+                parts = SplitBySeparator(parts, separator).ToList();
             }
-            return total;
+            return parts.Select(x => int.Parse(x)).ToList();
         }
+        private IList<string> SplitBySeparator(string input, string separator) =>
+            input.Split(separator);
+
+        private IList<string> SplitBySeparator(IEnumerable<string> inputCollection, string separator) =>
+            inputCollection
+            .Select(inp => SplitBySeparator(inp, separator))
+            .SelectMany(x=>x)
+            .ToArray();
     }
 }
