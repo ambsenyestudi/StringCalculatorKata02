@@ -1,5 +1,4 @@
 using StringCalculatorKata.Domain;
-using System;
 using Xunit;
 
 namespace StringCalculatorKata.Test
@@ -49,6 +48,15 @@ namespace StringCalculatorKata.Test
         {
             string input = "1\n2,3";
             int expected = 6;
+            var result = sut.Add(input);
+            Assert.Equal(expected, result);
+        }
+        //Add("//;\n1;2") // 3
+        [Fact]
+        public void add_many_cutstom_separated_numbers()
+        {
+            string input = "//;\n1;2";
+            int expected = 3;
             var result = sut.Add(input);
             Assert.Equal(expected, result);
         }
