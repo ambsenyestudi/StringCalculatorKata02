@@ -4,19 +4,21 @@ namespace StringCalculatorKata.Domain
 {
     public class StringCalculator
     {
-        public int Add(string numbers)
+        public int Add(string numberInput)
         {
-            if(string.IsNullOrEmpty(numbers))
+            if(string.IsNullOrEmpty(numberInput))
             {   
                 return 0;
             }
             
-            if(numbers.Contains(","))
+            if(numberInput.Contains(","))
             {
-                return 3;
+                var numberParts = numberInput.Split(",");
+
+                return int.Parse(numberParts[0]) + int.Parse(numberParts[1]);
             }
 
-            return int.Parse(numbers);
+            return int.Parse(numberInput);
         }
     }
 }
