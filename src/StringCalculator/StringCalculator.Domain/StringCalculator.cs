@@ -68,7 +68,7 @@ namespace StringCalculatorKata.Domain
             return isFound;
         }
 
-        private List<int> ToAdditionParts(string numberInput, IList<char> separatorCollection)
+        private List<int> ToAdditionParts(string numberInput, IList<char> separatorCollection, int maxThreshold = 1000)
         {
             var parts = new List<string> { numberInput };
             foreach (var separator in separatorCollection)
@@ -80,7 +80,7 @@ namespace StringCalculatorKata.Domain
             {
                 throw new NegativeNumberExpection("Add can not operate negative numbers");
             }
-            return numbers.ToList();
+            return numbers.Where(x=>x<=maxThreshold).ToList();
         }
         private IList<string> SplitBySeparator(string input, char separator) =>
             input.Split(separator);
