@@ -67,6 +67,7 @@ namespace StringCalculatorKata.Test
             string input = "1,-2,-3";
             Assert.Throws<NegativeNumberExpection>(()=>sut.Add(input));
         }
+        //Add("1001, 2") // 2
         [Fact]
         public void ignore_numbers_greater_than_1000()
         {
