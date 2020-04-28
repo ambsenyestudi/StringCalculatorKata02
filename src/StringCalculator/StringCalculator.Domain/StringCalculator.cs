@@ -6,11 +6,11 @@ namespace StringCalculatorKata.Domain
     {
         public int Add(string numbers)
         {
-            if(numbers == "4")
-            {
-                return 4;
+            if(string.IsNullOrEmpty(numbers))
+            {   
+                return 0;
             }
-            return 0;
+            return 4;
         }
     }
 }
