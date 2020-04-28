@@ -10,6 +10,11 @@ namespace StringCalculatorKata.Domain
             {   
                 return 0;
             }
+            
+            if(numbers.Contains(","))
+            {
+                return 3;
+            }
             return 4;
         }
     }
