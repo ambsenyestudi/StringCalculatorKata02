@@ -49,5 +49,14 @@ namespace StringCalculatorKata.Test
             var result = sut.Add(input);
             Assert.Equal(expected, result);
         }
+        //Add("1\n2,3") 6
+        [Fact]
+        public void add_many_coma_or_new_line_separated_numbers()
+        {
+            string input = "1\n2,3";
+            int expected = 6;
+            var result = sut.Add(input);
+            Assert.Equal(expected, result);
+        }
     }
 }
