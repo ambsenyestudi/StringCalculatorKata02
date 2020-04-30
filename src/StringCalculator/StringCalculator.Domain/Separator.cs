@@ -28,11 +28,17 @@ namespace StringCalculatorKata.Domain
         {
             if(IsAnyLengthFormat(expression))
             {
-                var processedSeparator = expression.Replace("[", "").Replace("]", "");
-                return new List<Separator> { new Separator(processedSeparator)};
+                List<Separator> list = ProcessBrackets(expression);
+                return list;
             }
             return expression.Select(x => new Separator(x.ToString())).ToList();
         }
+
+        private static List<Separator> ProcessBrackets(string expression)=>
+            expression.Split("]")
+            .Where(x=>x.Contains("["))
+            .Select(x=>new Separator(x.Replace("[",""))).ToList();
+
         public static IList<Separator> FromExpression(string separatorExpression, string expressionStart, string expressionEnd)
         {
             if(IsCustomSeparatorExpresssion(separatorExpression, expressionStart, expressionEnd))
