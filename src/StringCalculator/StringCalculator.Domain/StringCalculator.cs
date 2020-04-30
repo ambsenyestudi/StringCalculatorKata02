@@ -41,15 +41,24 @@ namespace StringCalculatorKata.Domain
             return int.Parse(numberInput);
         }
 
-        private string ExtractOperation(string numberInput)
-        {
-            return numberInput.Split(NEW_LINE)[1];
-        }
+        private string ExtractOperation(string numberInput) =>
+            numberInput.Substring(FirstOccurranceOfDigit(numberInput));
 
         private char[] ExtractCustomSeparators(string numberInput)
         {
-            EnsureCustomSeparatorFormat(numberInput);
-            return ExtractCustomSepartorPart(numberInput).ToCharArray();            
+
+            var separatorExpression = GetSeparatorExpression(numberInput);
+            var isAny = separatorExpression.Any();
+            EnsureCustomSeparatorFormat(separatorExpression);
+
+            var separators = numberInput.Skip(CUSTOM_SEPARATORS_STARTER.Length).Take(numberInput.IndexOf(NEW_LINE) - CUSTOM_SEPARATORS_STARTER.Length);
+            return ExtractCustomSepartorPart(numberInput).ToCharArray();
+        }
+
+        private string GetSeparatorExpression(string numberInput)
+        {
+            
+            return numberInput.Substring(0,FirstOccurranceOfDigit(numberInput));
         }
 
         private string ExtractCustomSepartorPart(string numberInput) =>
@@ -58,7 +67,15 @@ namespace StringCalculatorKata.Domain
             .Split(NEW_LINE)
             .First();
 
-
+        private int FirstOccurranceOfDigit(string input) 
+        {
+            var indexedCharCollection = input.Select((x, i) => new { Index = i, Char = x });
+            if(!indexedCharCollection.Any())
+            {
+                return -1;
+            }
+            return indexedCharCollection.First(x => char.IsDigit(x.Char)).Index;
+        }
         private bool ContainsDefaultSeparators(string numberInput) =>
             numberInput.Any(x => defaultSeparatorList.Contains(x));
 
@@ -88,16 +105,17 @@ namespace StringCalculatorKata.Domain
             .ToList();
 
         #region BusinessForce Enforcemente
-        private void EnsureCustomSeparatorFormat(string numberInput)
+        private void EnsureCustomSeparatorFormat(string separatorExpression)
         {
-            var isSeparatorFormat = numberInput.StartsWith(CUSTOM_SEPARATORS_STARTER) && numberInput.Contains(NEW_LINE);
+            var isSeparatorFormat = separatorExpression.StartsWith(CUSTOM_SEPARATORS_STARTER) && separatorExpression.EndsWith(NEW_LINE);
             if (!isSeparatorFormat)
             {
-                throw new ArgumentException($"{nameof(numberInput)}: {numberInput} does not meet custom serparator format requirements");
+                throw new ArgumentException($"{nameof(separatorExpression)}: {separatorExpression} does not meet custom serparator format requirements");
             }
         }
         private void EnsureNoNegativeNumbers(IEnumerable<int> numbers)
         {
+            
             if (numbers.Any(x => x < 0))
             {
                 throw new NegativeNumberExpection("Add can not operate negative numbers");
