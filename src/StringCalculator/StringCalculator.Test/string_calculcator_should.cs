@@ -76,5 +76,14 @@ namespace StringCalculatorKata.Test
             var result = sut.Add(input);
             Assert.Equal(expected, result);
         }
+        //Separators can be of any length if surrounded by square brackets.
+        [Fact]
+        public void add_numbers_with_custom_separators_of_any_length()
+        {
+            string input = "//[***]\n1***2***3";
+            int expected = 6;
+            var result = sut.Add(input);
+            Assert.Equal(expected, result);
+        }
     }
 }
