@@ -85,5 +85,15 @@ namespace StringCalculatorKata.Test
             var result = sut.Add(input);
             Assert.Equal(expected, result);
         }
+
+        //Handle multiple separators with any character length.
+        [Fact]
+        public void add_numbers_with_many_custom_separators_of_any_length()
+        {
+            string input = "//[foo][bar]\n1foo2bar3";
+            int expected = 6;
+            var result = sut.Add(input);
+            Assert.Equal(expected, result);
+        }
     }
 }
