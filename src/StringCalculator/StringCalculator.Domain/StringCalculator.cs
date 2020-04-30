@@ -49,49 +49,18 @@ namespace StringCalculatorKata.Domain
 
             var separatorExpression = GetSeparatorExpression(numberInput);
             var isAny = separatorExpression.Any();
-            EnsureCustomSeparatorFormat(separatorExpression);
-            var processedExpresion = separatorExpression.Replace(CUSTOM_SEPARATORS_STARTER, "").Replace(NEW_LINE, "");
-            if(IsLengthOneSeparator(processedExpresion))
-            {
-                return processedExpresion.Select(x => x.ToString()).ToArray();
-            }
-
-            return ProcessAnyLengthSeparators(processedExpresion);
+            var separators = Separator.FromExpression(separatorExpression, CUSTOM_SEPARATORS_STARTER, NEW_LINE);
+            return separators.Select(x=>x.Value).ToArray();
         }
 
-        //rules of separator
-        private string[] ProcessAnyLengthSeparators(string processedExpresion)
-        {
-            if (IsLengthAnySeparator(processedExpresion))
-            {
-                var processedSeparator = processedExpresion.Replace("[", "").Replace("]", "");
-                return new string[] { processedSeparator };
-            }
-            throw new ArgumentException($"{nameof(processedExpresion)}: {processedExpresion} does not meet custom serparator of any length format requirements");
-        }
-
-        
-        private bool IsLengthOneSeparator(string separators) =>
-            !IsLengthAnySeparator(separators);
-        private bool IsLengthAnySeparator(string separtors) =>
-            separtors.Contains("[") && separtors.Contains("]");
-        private string GetSeparatorExpression(string numberInput)
-        {
-            
-            return numberInput.Substring(0,FirstOccurranceOfDigit(numberInput));
-        }
-        private void EnsureCustomSeparatorFormat(string separatorExpression)
-        {
-            var isSeparatorFormat = separatorExpression.StartsWith(CUSTOM_SEPARATORS_STARTER) && separatorExpression.EndsWith(NEW_LINE);
-            if (!isSeparatorFormat)
-            {
-                throw new ArgumentException($"{nameof(separatorExpression)}: {separatorExpression} does not meet custom serparator format requirements");
-            }
-        }
         private bool ContainsDefaultSeparators(string numberInput) =>
             numberInput.Any(x => defaultSeparatorList.Contains(x.ToString()));
 
         //input processing
+        private string GetSeparatorExpression(string numberInput)
+        {
+            return numberInput.Substring(0, FirstOccurranceOfDigit(numberInput));
+        }
         private int FirstOccurranceOfDigit(string input) 
         {
             var indexedCharCollection = input.Select((x, i) => new { Index = i, Char = x });
