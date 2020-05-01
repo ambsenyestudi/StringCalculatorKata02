@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using StringCalculatorKata.Domain.Input;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace StringCalculatorKata.Domain
@@ -19,8 +20,22 @@ namespace StringCalculatorKata.Domain
         }
         public int Add(string numberInput)
         {
-            var operationInput = new OperationInput(numberInput, defaultSeparatorList, CustomSeparatorDefinition);
-            return operationInput.Numbers.Sum();
+            //var operationInput = new BasicOperationInput(numberInput, defaultSeparatorList, CustomSeparatorDefinition);
+            if(OperationInput.IsSingleOrNoDigit(numberInput))
+            {
+                return OperationInput
+                    .CreateNoSeparatorInput(numberInput).Numbers
+                    .Sum();
+            }
+            else if(OperationInput.IsCustomSeparatorDefinition(numberInput, CustomSeparatorDefinition))
+            {
+                return OperationInput
+                    .CreateCustomSeparatedOperationInput(numberInput, CustomSeparatorDefinition).Numbers
+                    .Sum();
+            }
+            return OperationInput
+                .CreateDefaultOperationInput(numberInput, defaultSeparatorList).Numbers
+                .Sum();
         }
 
 
