@@ -6,18 +6,19 @@ namespace StringCalculatorKata.Domain
 {
     public class OperationInput
     {
+        private readonly CustomSeparatorExpression customSeparatorExpression;
+
         public IList<string> DefaultSeparators { get; }
-
-        private readonly SeparatorExpressionDefinition separatorDefinition;
-
+        
         public IList<int> Numbers { get; private set; }
         public OperationInput(
             string operationExpression, 
             IList<string> defaultSeparators,
             SeparatorExpressionDefinition separatorDefinition)
         {
+            
             DefaultSeparators = defaultSeparators;
-            this.separatorDefinition = separatorDefinition;
+            customSeparatorExpression = new CustomSeparatorExpression(operationExpression, separatorDefinition);
             Numbers = ProcessOperation(operationExpression);
             
         }
@@ -27,24 +28,14 @@ namespace StringCalculatorKata.Domain
             {
                 return new int[] { int.Parse(operationExpression) };
             }
-            else if(TryGetSeparatorExpression(
-                operationExpression, 
-                separatorDefinition, 
-                out string separatorExpresion))
+            else if(customSeparatorExpression.HasValue)
             {
-                var customSerpartorCollection = ExtractCustomSeparators(separatorExpresion, separatorDefinition);
                 var operationExpressionPart = ExtractOperationPart(operationExpression);
-                return ExtractNumbers(operationExpressionPart, customSerpartorCollection);
+                return ExtractNumbers(operationExpressionPart, customSeparatorExpression.Value);
             }
             else if(ContainsSepartors(operationExpression, DefaultSeparators))
             {
                 return ExtractNumbers(operationExpression, DefaultSeparators);
-                /*
-                var splitOperators = operationExpression
-                    .Split(DefaultSeparators.ToArray(), StringSplitOptions.RemoveEmptyEntries);
-                var splitNumbers = splitOperators.Select(x => int.Parse(x)).ToList();
-                return splitNumbers;
-                */
             }
             return new int []{ 0 };
         }
@@ -54,12 +45,7 @@ namespace StringCalculatorKata.Domain
 
         private static bool ContainsSepartors(string operationExpression, IList<string> separators) =>
             operationExpression.Any(x => separators.Contains(x.ToString()));
-        private string[] ExtractCustomSeparators(string separatorExpression, SeparatorExpressionDefinition definition)
-        {
-            var isAny = separatorExpression.Any();
-            var separators = Separator.FromExpression(separatorExpression, definition.Starting, definition.Ending);
-            return separators.Select(x => x.Value).ToArray();
-        }
+        
         public string ExtractOperationPart(string input) =>
             input.Substring(FirstOccurranceOfDigit(input));
         public int FirstOccurranceOfDigit(string input)
@@ -84,13 +70,7 @@ namespace StringCalculatorKata.Domain
             }
             return beforeDigits;
         }
-        public bool TryGetSeparatorExpression(string numberInput, 
-            SeparatorExpressionDefinition definition, 
-            out string expression)
-        {
-            expression = GetSeparatorExpression(numberInput, definition);
-            return !string.IsNullOrWhiteSpace(expression);
-        }
+        
         public IList<int> ExtractNumbers(string operationExpression, IList<string> separators)
         {
             var splitOperators = operationExpression
@@ -105,6 +85,8 @@ namespace StringCalculatorKata.Domain
             }
             return splitNumbers;
         }
+        public IList<int> ExtractNumbers(string operationExpression, IList<Separator> separators) =>
+            ExtractNumbers(operationExpression, separators.Select(x => x.Value).ToArray());
 
     }
 }
