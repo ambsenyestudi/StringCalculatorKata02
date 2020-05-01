@@ -1,9 +1,9 @@
 ﻿using StringCalculatorKata.Domain.Operation;
-using System;
+using StringCalculatorKata.Domain.Separators;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StringCalculatorKata.Domain.Input
+namespace StringCalculatorKata.Domain.Inputs
 {
     public abstract class OperationInput
     {
@@ -11,7 +11,7 @@ namespace StringCalculatorKata.Domain.Input
         public OperationExpression OperationExpression { get; protected set; }
         public static bool IsSingleOrNoDigit(string input) => 
             SingleNumberOperationExpression.IsAllDigits(input);
-        public static bool IsCustomSeparatorDefinition(string input, SeparatorExpressionDefinition separatorDefinition)
+        public static bool ContainsDefinition(string input, SeparatorExpressionDefinition separatorDefinition)
         {
             var expresssion = new CustomSeparatorExpression(input, separatorDefinition);
             return expresssion.HasValue;

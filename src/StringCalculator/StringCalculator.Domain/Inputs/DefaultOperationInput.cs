@@ -1,7 +1,8 @@
 ﻿using StringCalculatorKata.Domain.Operation;
+using StringCalculatorKata.Domain.Separators;
 using System.Collections.Generic;
 
-namespace StringCalculatorKata.Domain.Input
+namespace StringCalculatorKata.Domain.Inputs
 {
     public class DefaultOperationInput : OperationInput
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StringCalculatorKata.Domain
+namespace StringCalculatorKata.Domain.Separators
 {
     public class Separator
     {

@@ -1,4 +1,6 @@
-﻿namespace StringCalculatorKata.Domain.Operation
+﻿using StringCalculatorKata.Domain.Separators;
+
+namespace StringCalculatorKata.Domain.Operation
 {
     public class CustomSeparatorOperationExpression: DefaultOperationExpression
     {

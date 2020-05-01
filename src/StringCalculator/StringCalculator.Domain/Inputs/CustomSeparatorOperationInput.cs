@@ -1,6 +1,7 @@
 ﻿using StringCalculatorKata.Domain.Operation;
+using StringCalculatorKata.Domain.Separators;
 
-namespace StringCalculatorKata.Domain.Input
+namespace StringCalculatorKata.Domain.Inputs
 {
     internal class CustomSeparatorOperationInput : OperationInput
     {

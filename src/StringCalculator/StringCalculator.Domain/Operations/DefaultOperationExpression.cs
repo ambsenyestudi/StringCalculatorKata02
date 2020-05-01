@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StringCalculatorKata.Domain.Separators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
