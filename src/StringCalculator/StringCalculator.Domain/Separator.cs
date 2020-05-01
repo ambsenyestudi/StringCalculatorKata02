@@ -48,7 +48,8 @@ namespace StringCalculatorKata.Domain
             }
             throw new ArgumentException($"{nameof(separatorExpression)}: {separatorExpression} does not meet custom serparator format requirements");
         }
-        //todo implent implicit string comparison
+
         public static implicit operator string (Separator s)=>s.Value;
+        
     }
 }
