@@ -10,8 +10,9 @@ public class StringCalculator
 
     public int Add(string numberInput)
     {
-        if(TryGetSepartor(numberInput, out string separator))
+        if(SeparatorDefinitionRegex.IsMatch(numberInput))
         {
+            var separator = GetSepartor(numberInput);
             var inputMembers = RemoveSeparatorDefinition(numberInput).Split(separator);
             return ParseInput(inputMembers).Sum();
         }
@@ -23,16 +24,10 @@ public class StringCalculator
         return ParseInput(numberInput);
     }
 
-    private bool TryGetSepartor(string numberInput, out string separator)
-    {
-        if(!SeparatorDefinitionRegex.IsMatch(numberInput))
-        {
-            separator = string.Empty;
-            return false;
-        }
-        separator = numberInput.Split(NEW_LINE).First().Replace(CHARATER_DEFINITION_STARTER, string.Empty);
-        return true;
-    }
+    private string GetSepartor(string numberInput) =>
+        numberInput.Substring(0, numberInput.IndexOf(NEW_LINE))
+            .Replace(CHARATER_DEFINITION_STARTER, string.Empty);
+
     private static string RemoveSeparatorDefinition(string numberInput) =>
         numberInput.Split(NEW_LINE).Last();
 
