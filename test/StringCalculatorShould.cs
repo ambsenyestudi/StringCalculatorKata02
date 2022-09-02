@@ -14,6 +14,7 @@ public class StringCalculatorShould
     [InlineData("",0)]
     [InlineData("4", 4)]
     [InlineData("1,2", 3)]
+    [InlineData("1,2,3,4,5,6,7,8,9", 45 )]
     public void Add(string input, int expected)
     {
         var result = _stringCalculator.Add(input);
