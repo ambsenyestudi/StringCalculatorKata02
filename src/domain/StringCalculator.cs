@@ -8,9 +8,14 @@ public class StringCalculator
         
         if(numberInput.Contains(SEPARATOR))
         {
-            return numberInput.Split(SEPARATOR).Select(x => int.Parse(x)).Sum();
+            return ParseInput(numberInput.Split(SEPARATOR)).Sum();
         }
-        return ParseInput(numberInput);
+        return this.ParseInput(numberInput);
+    }
+
+    private static IEnumerable<int> ParseInput(string[] numberInput)
+    {
+        return numberInput.Select(x => int.Parse(x));
     }
 
     private int ParseInput(string numberInput)
