@@ -7,6 +7,10 @@ public class StringCalculator
         {
             return 0;
         }
+        if(numberInput.Contains(","))
+        {
+            return numberInput.Split(",").Select(x => int.Parse(x)).Sum();
+        }
         return int.Parse(numberInput);
     }
 }
