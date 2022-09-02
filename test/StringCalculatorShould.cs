@@ -13,6 +13,7 @@ public class StringCalculatorShould
     [Theory]
     [InlineData("",0)]
     [InlineData("4", 4)]
+    [InlineData("1,2", 3)]
     public void Add(string input, int expected)
     {
         var result = _stringCalculator.Add(input);
