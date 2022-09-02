@@ -1,19 +1,17 @@
-﻿using System.Text.RegularExpressions;
-
-namespace StringCalculation.Domain;
+﻿namespace StringCalculation.Domain;
 public class StringCalculator
 {
     private const string SEPARATOR = ",";
     private const string NEW_LINE = "\n";
-    private const string CHARATER_DEFINITION_STARTER = "//";
-    private readonly Regex SeparatorDefinitionRegex = new Regex($"^{CHARATER_DEFINITION_STARTER}*{NEW_LINE}*");
+   
+    
 
     public int Add(string numberInput)
     {
-        if(SeparatorDefinitionRegex.IsMatch(numberInput))
+        if(SeparatorDefinition.ContainsDefinition(numberInput))
         {
-            var separator = GetSepartor(numberInput);
-            var inputMembers = SplitMembers(RemoveSeparatorDefinition(numberInput), separator);
+            var definition = SeparatorDefinition.GetDefinition(numberInput);
+            var inputMembers = SplitMembers(definition.RemoveDefintionFrom(numberInput), definition.ToSeparator());
             return ParseInput(inputMembers).Sum();
         }
         if(numberInput.Contains(SEPARATOR) || numberInput.Contains(NEW_LINE))
@@ -28,10 +26,6 @@ public class StringCalculator
     {
         return input.Split(separator.Value);
     }
-
-    private Separator GetSepartor(string numberInput) =>
-        new Separator(numberInput.Substring(0, numberInput.IndexOf(NEW_LINE))
-            .Replace(CHARATER_DEFINITION_STARTER, string.Empty));
 
     private static string RemoveSeparatorDefinition(string numberInput) =>
         numberInput.Split(NEW_LINE).Last();
