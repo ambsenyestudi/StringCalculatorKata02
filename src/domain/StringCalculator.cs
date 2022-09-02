@@ -13,7 +13,7 @@ public class StringCalculator
         if(SeparatorDefinitionRegex.IsMatch(numberInput))
         {
             var separator = GetSepartor(numberInput);
-            var inputMembers = RemoveSeparatorDefinition(numberInput).Split(separator.Value);
+            var inputMembers = SplitMembers(RemoveSeparatorDefinition(numberInput), separator);
             return ParseInput(inputMembers).Sum();
         }
         if(numberInput.Contains(SEPARATOR) || numberInput.Contains(NEW_LINE))
@@ -22,6 +22,11 @@ public class StringCalculator
             return ParseInput(inputMembers).Sum();
         }
         return ParseInput(numberInput);
+    }
+
+    private IEnumerable<string> SplitMembers(string input, Separator separator)
+    {
+        return input.Split(separator.Value);
     }
 
     private Separator GetSepartor(string numberInput) =>
