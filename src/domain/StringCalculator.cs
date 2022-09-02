@@ -6,18 +6,16 @@ public class StringCalculator
 
     public int Add(string numberInput)
     {
-        if(numberInput == "1\n2,3")
+        
+        if(numberInput.Contains(SEPARATOR) || numberInput.Contains(NEW_LINE))
         {
-            return 6;
-        }
-        if(numberInput.Contains(SEPARATOR))
-        {
-            return ParseInput(numberInput.Split(SEPARATOR)).Sum();
+            var inputMembers = numberInput.Split(SEPARATOR).SelectMany(x => x.Split(NEW_LINE));
+            return ParseInput(inputMembers).Sum();
         }
         return ParseInput(numberInput);
     }
 
-    private static IEnumerable<int> ParseInput(string[] numberInput) =>
+    private static IEnumerable<int> ParseInput(IEnumerable<string> numberInput) =>
         numberInput.Select(x => ParseInput(x));
 
     private static int ParseInput(string numberInput)
