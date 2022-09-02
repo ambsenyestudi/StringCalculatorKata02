@@ -10,10 +10,12 @@ public class StringCalculatorShould
     {
         _stringCalculator = new StringCalculator();
     }
-    [Fact]
-    public void Add()
+    [Theory]
+    [InlineData("",0)]
+    [InlineData("4", 4)]
+    public void Add(string input, int expected)
     {
-        var result = _stringCalculator.Add("");
-        Assert.Equal(0, result);
+        var result = _stringCalculator.Add(input);
+        Assert.Equal(expected, result);
     }
 }
