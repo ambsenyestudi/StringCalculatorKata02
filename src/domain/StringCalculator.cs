@@ -11,7 +11,8 @@ public class StringCalculator
         if(SeparatorDefinition.ContainsDefinition(numberInput))
         {
             var definition = SeparatorDefinition.GetDefinition(numberInput);
-            var inputMembers = SplitMembers(definition.RemoveDefintionFrom(numberInput), definition.ToSeparator());
+            var inputMembers = definition.ToSeparator()
+                .Split(definition.RemoveDefintionFrom(numberInput));
             return ParseInput(inputMembers).Sum();
         }
         if(numberInput.Contains(SEPARATOR) || numberInput.Contains(NEW_LINE))
@@ -22,13 +23,6 @@ public class StringCalculator
         return ParseInput(numberInput);
     }
 
-    private IEnumerable<string> SplitMembers(string input, Separator separator)
-    {
-        return input.Split(separator.Value);
-    }
-
-    private static string RemoveSeparatorDefinition(string numberInput) =>
-        numberInput.Split(NEW_LINE).Last();
 
     private static IEnumerable<int> ParseInput(IEnumerable<string> numberInput) =>
         numberInput.Select(x => ParseInput(x));
