@@ -1,4 +1,6 @@
-﻿namespace StringCalculation.Domain;
+﻿using System.Text.RegularExpressions;
+
+namespace StringCalculation.Domain;
 public class StringCalculator
 {
     private const string SEPARATOR = ",";
@@ -22,8 +24,9 @@ public class StringCalculator
 
     private static bool TryGetSepartor(string numberInput, out string separator)
     {
+        var regex = new Regex($"^{CHARATER_DEFINITION_STARTER}*{NEW_LINE}*");
         
-        if(!numberInput.StartsWith(CHARATER_DEFINITION_STARTER))
+        if(!regex.IsMatch(numberInput))
         {
             separator = string.Empty;
             return false;
