@@ -3,6 +3,6 @@ public class StringCalculator
 {
     public int Add(string numberInput)
     {
-        throw new NotImplementedException();
+        return 0;
     }
 }
