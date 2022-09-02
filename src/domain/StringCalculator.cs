@@ -10,15 +10,13 @@ public class StringCalculator
         {
             return ParseInput(numberInput.Split(SEPARATOR)).Sum();
         }
-        return this.ParseInput(numberInput);
+        return ParseInput(numberInput);
     }
 
-    private static IEnumerable<int> ParseInput(string[] numberInput)
-    {
-        return numberInput.Select(x => int.Parse(x));
-    }
+    private static IEnumerable<int> ParseInput(string[] numberInput) =>
+        numberInput.Select(x => ParseInput(x));
 
-    private int ParseInput(string numberInput)
+    private static int ParseInput(string numberInput)
     {
         if (string.IsNullOrWhiteSpace(numberInput))
         {
