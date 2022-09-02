@@ -6,6 +6,7 @@ public class StringCalculator
     private const string SEPARATOR = ",";
     private const string NEW_LINE = "\n";
     private const string CHARATER_DEFINITION_STARTER = "//";
+    private readonly Regex SeparatorDefinitionRegex = new Regex($"^{CHARATER_DEFINITION_STARTER}*{NEW_LINE}*");
 
     public int Add(string numberInput)
     {
@@ -22,11 +23,9 @@ public class StringCalculator
         return ParseInput(numberInput);
     }
 
-    private static bool TryGetSepartor(string numberInput, out string separator)
+    private bool TryGetSepartor(string numberInput, out string separator)
     {
-        var regex = new Regex($"^{CHARATER_DEFINITION_STARTER}*{NEW_LINE}*");
-        
-        if(!regex.IsMatch(numberInput))
+        if(!SeparatorDefinitionRegex.IsMatch(numberInput))
         {
             separator = string.Empty;
             return false;
