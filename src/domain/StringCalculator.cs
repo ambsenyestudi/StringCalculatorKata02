@@ -13,7 +13,7 @@ public class StringCalculator
     {
         if(_customSeparatorService.StartsWithDefintion(numberInput))
         {
-            return _customSeparatorService.Split(numberInput);
+            return _customSeparatorService.Split(numberInput).Select(x=> int.Parse(x)).Sum();
         }
         if(numberInput.Contains(SEPARATOR) || numberInput.Contains(NEW_LINE))
         {
