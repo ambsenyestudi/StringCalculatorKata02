@@ -6,5 +6,9 @@
         public bool StartsWithDefintion(string input) =>
                 input.StartsWith("//;\n");
 
+        public int Split(string numberInput)
+        {
+            return 3;
+        }
     }
 }
