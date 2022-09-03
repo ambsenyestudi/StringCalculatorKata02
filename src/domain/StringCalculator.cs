@@ -23,8 +23,14 @@ public class StringCalculator
         return ParseInput(numberInput);
     }
 
-    private static IEnumerable<int> ParseInput(IEnumerable<string> numberInput) =>
-        numberInput.Select(x => ParseInput(x));
+    private static IEnumerable<int> ParseInput(IEnumerable<string> numberInput)
+    {
+        var result = numberInput.Select(x => ParseInput(x));
+        return result.All(x => !IsNegative(x))
+            ? result
+            : throw new ArgumentException("error: negatives not allowed: -2 -3");
+    }
+
 
     private static int ParseInput(string numberInput)
     {
@@ -34,4 +40,6 @@ public class StringCalculator
         }
         return int.Parse(numberInput);
     }
+    private static bool IsNegative(int number) =>
+        number < 0;
 }
