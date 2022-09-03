@@ -3,7 +3,12 @@ public class StringCalculator
 {
     private const string SEPARATOR = ",";
     private const string NEW_LINE = "\n";
+    private readonly CustomSepatorService _customSeparatorService;
 
+    public StringCalculator()
+    {
+        _customSeparatorService = new CustomSepatorService();
+    }
     public int Add(string numberInput)
     {
         if(numberInput == "//;\n1;2")
