@@ -4,8 +4,14 @@ namespace StringCalculation.Domain
 {
     public class CustomSepatorService
     {
-        private const string DEFINITION_PATTERN = "//.\n";
-        private readonly Regex _separatorRegex = new Regex($"^{DEFINITION_PATTERN}*");
+        private const string DEFINITION_START = "//";
+        private const string DEFINITION_END = "\n";
+        private readonly string DEFINITION_PATTERN = $"{DEFINITION_START}.{DEFINITION_END}";
+        private readonly Regex _separatorRegex; 
+        public CustomSepatorService()
+        {
+            _separatorRegex = new Regex($"^{DEFINITION_PATTERN}*");
+        }
         public bool StartsWithDefintion(string input) =>
             _separatorRegex.IsMatch(input);
 
@@ -17,6 +23,6 @@ namespace StringCalculation.Domain
         }
 
         private string GetSeparator(string definition) =>
-            ";";
+            Regex.Replace(definition, "[\\//\n]", string.Empty);
     }
 }
