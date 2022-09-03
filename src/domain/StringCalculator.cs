@@ -26,9 +26,10 @@ public class StringCalculator
     private static IEnumerable<int> ParseInput(IEnumerable<string> numberInput)
     {
         var result = numberInput.Select(x => ParseInput(x));
-        return result.All(x => !IsNegative(x))
-            ? result
-            : throw new ArgumentException("error: negatives not allowed: -2 -3");
+        var negatives = result.Where(x => IsNegative(x));
+        return negatives.Any()
+            ? throw new ArgumentException("error: negatives not allowed: " + string.Join(" ", negatives))
+            : result;
     }
 
 
