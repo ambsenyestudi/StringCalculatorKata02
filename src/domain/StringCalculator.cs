@@ -4,8 +4,6 @@ public class StringCalculator
     private const string SEPARATOR = ",";
     private const string NEW_LINE = "\n";
    
-    
-
     public int Add(string numberInput)
     {
         if(SeparatorDefinition.ContainsDefinition(numberInput))
