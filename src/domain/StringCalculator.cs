@@ -3,6 +3,7 @@ public class StringCalculator
 {
     private const string SEPARATOR = ",";
     private const string NEW_LINE = "\n";
+    private const string ERROR_TEMPLATE = "error: negatives not allowed: {0}";
     private readonly CustomSepatorService _customSeparatorService;
 
     public StringCalculator()
@@ -28,7 +29,7 @@ public class StringCalculator
         var result = numberInput.Select(x => ParseInput(x));
         var negatives = result.Where(x => IsNegative(x));
         return negatives.Any()
-            ? throw new ArgumentException("error: negatives not allowed: " + string.Join(" ", negatives))
+            ? throw new ArgumentException(string.Format(ERROR_TEMPLATE, string.Join(" ", negatives)))
             : result;
     }
 
