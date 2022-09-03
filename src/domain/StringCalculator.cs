@@ -11,7 +11,7 @@ public class StringCalculator
     }
     public int Add(string numberInput)
     {
-        if(numberInput == "//;\n1;2")
+        if(_customSeparatorService.StartsWithDefintion(numberInput))
         {
             return 3;
         }
