@@ -33,7 +33,6 @@ public class StringCalculator
             : result;
     }
 
-
     private static int ParseInput(string numberInput)
     {
         if (string.IsNullOrWhiteSpace(numberInput))
@@ -42,6 +41,7 @@ public class StringCalculator
         }
         return int.Parse(numberInput);
     }
+
     private static bool IsNegative(int number) =>
-        number < 0;
+        Math.Abs(number) != number;
 }
