@@ -5,6 +5,7 @@ public class StringCalculator
     private const string NEW_LINE = "\n";
     private const string ERROR_TEMPLATE = "error: negatives not allowed: {0}";
     private readonly CustomSepatorService _customSeparatorService;
+    private const int MAX = 1000;
 
     public StringCalculator()
     {
@@ -12,10 +13,7 @@ public class StringCalculator
     }
     public int Add(string numberInput)
     {
-        if(numberInput == "1001,2")
-        {
-            return 2;
-        }
+        
         if(_customSeparatorService.StartsWithDefintion(numberInput))
         {
             return ParseInput(_customSeparatorService.Split(numberInput)).Sum();
@@ -23,7 +21,7 @@ public class StringCalculator
         if(numberInput.Contains(SEPARATOR) || numberInput.Contains(NEW_LINE))
         {
             var inputMembers = numberInput.Split(SEPARATOR).SelectMany(x => x.Split(NEW_LINE));
-            return ParseInput(inputMembers).Sum();
+            return ParseInput(inputMembers).Where(x=> x < MAX).Sum();
         }
         return ParseInput(numberInput);
     }
