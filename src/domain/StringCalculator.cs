@@ -16,7 +16,7 @@ public class StringCalculator
         
         if(_customSeparatorService.StartsWithDefintion(numberInput))
         {
-            return ParseInput(_customSeparatorService.Split(numberInput)).Sum();
+            return Sum(ParseInput(_customSeparatorService.Split(numberInput)));
         }
         if(numberInput.Contains(SEPARATOR) || numberInput.Contains(NEW_LINE))
         {
