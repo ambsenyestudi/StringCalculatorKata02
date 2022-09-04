@@ -21,9 +21,14 @@ public class StringCalculator
         if(numberInput.Contains(SEPARATOR) || numberInput.Contains(NEW_LINE))
         {
             var inputMembers = numberInput.Split(SEPARATOR).SelectMany(x => x.Split(NEW_LINE));
-            return ParseInput(inputMembers).Where(x=> x < MAX).Sum();
+            return Sum(ParseInput(inputMembers));
         }
         return ParseInput(numberInput);
+    }
+
+    private static int Sum(IEnumerable<int> inputMembers)
+    {
+        return inputMembers.Where(x => x < MAX).Sum();
     }
 
     private static IEnumerable<int> ParseInput(IEnumerable<string> numberInput)
