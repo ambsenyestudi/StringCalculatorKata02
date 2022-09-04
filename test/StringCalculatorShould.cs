@@ -17,6 +17,7 @@ public class StringCalculatorShould
     [InlineData("1,2,3,4,5,6,7,8,9", 45 )]
     [InlineData("1\n2,3", 6)]
     [InlineData("//;\n1;2", 3)]
+    [InlineData("1001,2", 2)]
     public void Add(string input, int expected)
     {
         var result = _stringCalculator.Add(input);
